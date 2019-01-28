@@ -1,0 +1,22 @@
+table {
+  background: #fffefd;
+  border: 1px solid;
+  margin:auto;
+}
+
+thead {
+  border: 1px solid;
+}
+
+th {
+  text-align: center;
+  border: 1px;
+}
+
+tbody {
+  border: 1px solid;
+}
+
+td {
+  border: 1px solid;
+}
