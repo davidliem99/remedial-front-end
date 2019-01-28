@@ -20,13 +20,13 @@ class ManageCategories extends Component {
     }
 
     onBtnAddClick = () => {
-        var nama = this.refs.namaAdd.value;
+        var namacat = this.refs.namaAdd.value;
 
-        if(nama === ''){
+        if(namacat === ''){
             window.alert('Ada kolom yang belum di isi !!!')
         }else{
             axios.post('http://localhost:2000/add-cat', {
-                nama
+                namacat
             }).then((res) => {
                 this.getCategoryList();
             }).catch((err) => {
@@ -35,15 +35,15 @@ class ManageCategories extends Component {
         }
     }
 
-    onBtnDeleteClick = (id) => {
+    onBtnDeleteClick = (id_cat) => {
         if(window.confirm('Yakin nih bro?')){
-            axios.post('http://localhost:2000/delete-cat/' + id)
+            axios.post('http://localhost:2000/delete-cat/' + id_cat)
                 .then((res) => {
                     this.getCategoryList();
                 }).catch((err) => {
                     console.log(err)
-                    console.log(typeof id)
-                    console.log(id)
+                    console.log(typeof id_cat)
+                    console.log(id_cat)
                 })
         }
     }
@@ -53,12 +53,12 @@ class ManageCategories extends Component {
     }
 
     //SAVE
-    onBtnSaveClick = (id) => {
-        var nama = this.refs.namaSAVE.value;
+    onBtnSaveClick = (id_cat) => {
+        var namacat = this.refs.namaSAVE.value;
         
-        console.log(nama)
-        axios.post('http://localhost:2000/edit-cat/' + id, {
-            nama
+        console.log(namacat)
+        axios.post('http://localhost:2000/edit-cat/' + id_cat, {
+            namacat
         }).then((res) => {
             console.log(res.data)
             
@@ -76,24 +76,24 @@ class ManageCategories extends Component {
     }
 
     renderBodyMovies = () => {
-        var listJSXCategories = this.state.listCategory.map(({ id, nama}) => {
+        var listJSXCategories = this.state.listCategory.map(({ id_cat, namacat}) => {
             
-            if(this.state.idTabel === id){
+            if(this.state.idTabel === id_cat){
                 return (
                     <tr>
-                        <td>{id}</td>
-                        <td><input ref="namaSAVE" type="text" defaultValue={nama} className="form-control" style={{width: "100px"}} /></td>    
-                        <td><input className="btn btn-success" type="button" value="Save" onClick={() => this.onBtnSaveClick(id)}/></td>
+                        <td>{id_cat}</td>
+                        <td><input ref="namaSAVE" type="text" defaultValue={namacat} className="form-control" style={{width: "100px"}} /></td>    
+                        <td><input className="btn btn-success" type="button" value="Save" onClick={() => this.onBtnSaveClick(id_cat)}/></td>
                         <td><input className="btn btn-danger" type="button" value="Cancel" onClick={this.onCancel}/></td>
                     </tr>
                 )
             }else{
                 return (
                     <tr>
-                        <td>{id}</td>
-                        <td>{nama}</td>
-                        <td><input className="btn btn-primary" type="button" value="Edit" onClick={() => this.onBtnEditText(id)}/></td>
-                        <td><input className="btn btn-danger" type="button" value="Delete" onClick={() => this.onBtnDeleteClick(id)} /></td>
+                        <td>{id_cat}</td>
+                        <td>{namacat}</td>
+                        <td><input className="btn btn-primary" type="button" value="Edit" onClick={() => this.onBtnEditText(id_cat)}/></td>
+                        <td><input className="btn btn-danger" type="button" value="Delete" onClick={() => this.onBtnDeleteClick(id_cat)} /></td>
                     </tr>
                 )
             }
@@ -127,7 +127,7 @@ class ManageCategories extends Component {
                             <tfoot>
                                 <tr>
                                 <td></td>
-                                    <td><input ref="namaAdd" type="text" placeholder="Nama film" className="form-control" style={{width: "120px"}} /></td>
+                                    <td><input ref="namaAdd" type="text" placeholder="Category" className="form-control" style={{width: "120px"}} /></td>
                                     <td><input type="button" className="btn btn-success" value="Add" onClick={this.onBtnAddClick}/></td>
                               
                                 </tr>

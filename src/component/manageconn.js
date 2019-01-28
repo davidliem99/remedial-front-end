@@ -13,50 +13,50 @@ class ManageConnect extends Component {
         axios.get('http://localhost:2000/movcat')
         .then((res) => {
             this.setState({ listConn: res.data })
-            // console.log(this.state.listPopok)
         }).catch((err) => {
             console.log(err)
         })
     }
 
     onBtnAddClick = () => {
-        var nama_film = this.refs.namafilmAdd.value;
-        var nama_category = this.refs.namacategoryAdd.value;
+        var nama = this.refs.namafilmAdd.value;
+        var namacat = this.refs.namacategoryAdd.value;
 
-        if(nama_film === '' || nama_category ===''){
+        if(nama === '' || namacat ===''){
             window.alert('Ada kolom yang belum di isi !!!')
         }else{
             axios.post('http://localhost:2000/add-movcat', {
-                nama_film,nama_category
+                nama,namacat
             }).then((res) => {
                 this.getConnectList();
             }).catch((err) => {
                 console.log(err)
+                console.log('ini error')
             })
         }
     }
 
-    onBtnDeleteClick = (id_film) => {
+    onBtnDeleteClick = (id_mov) => {
         if(window.confirm('R U Sure ?')){
-            axios.post('http://localhost:2000/delete-movcat/' + id_film)
+            axios.post('http://localhost:2000/delete-movcat/' + id_mov)
                 .then((res) => {
                     this.getConnectList();
                 }).catch((err) => {
                     console.log(err)
-                    console.log(typeof id_film)
-                    console.log(id_film)
+                    console.log(typeof id_mov)
+                    console.log(id_mov)
                 })
         }
     }
 
 
     RenderConnect = () => {
-        var listJSXConn = this.state.listConn.map(({ id_film, nama_film, nama_category}) => {
+        var listJSXConn = this.state.listConn.map(({ id_mov, nama, namacat}) => {
                 return (
                     <tr>
-                        <td>{nama_film}</td>
-                        <td>{nama_category}</td>
-                        <td><input className="btn btn-danger" type="button" value="Delete" onClick={() => this.onBtnDeleteClick(id_film)} /></td>
+                        <td>{nama}</td>
+                        <td>{namacat}</td>
+                        <td><input className="btn btn-danger" type="button" value="Delete" onClick={() => this.onBtnDeleteClick(id_mov)} /></td>
                     </tr>
                 )
             
@@ -64,17 +64,17 @@ class ManageConnect extends Component {
         return listJSXConn;
     }
     getNamafilm =()=>{
-        var namafilm = this.state.listConn.map(({nama_film})=>{
+        var namafilm = this.state.listConn.map(({nama})=>{
             return(
-                <option>{nama_film}</option>
+                <option>{nama}</option>
             )
         })
         return namafilm
     }
     getNamakategori =()=>{
-        var namakategori = this.state.listConn.map(({nama_category})=>{
+        var namakategori = this.state.listConn.map(({namacat})=>{
             return(
-                <option>{nama_category}</option>
+                <option>{namacat}</option>
             )
         })
         return namakategori

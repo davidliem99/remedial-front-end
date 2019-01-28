@@ -37,15 +37,15 @@ class Managemovies extends Component {
         }
     }
 
-    onBtnDeleteClick = (id) => {
+    onBtnDeleteClick = (id_mov) => {
         if(window.confirm('r u sure ?')){
-            axios.post('http://localhost:2000/delete-movie/' + id)
+            axios.post('http://localhost:2000/delete-movie/' + id_mov)
                 .then((res) => {
                     this.getMovieList();
                 }).catch((err) => {
                     console.log(err)
-                    console.log(typeof id)
-                    console.log(id)
+                    console.log(typeof id_mov)
+                    console.log(id_mov)
                 })
         }
     }
@@ -55,12 +55,12 @@ class Managemovies extends Component {
     }
 
     //SAVE
-    onBtnSaveClick = (id) => {
+    onBtnSaveClick = (id_mov) => {
         var nama = this.refs.namaSAVE.value;
         var tahun = this.refs.tahunSAVE.value;
         var description = this.refs.descSAVE.value;
         console.log(description)
-        axios.post('http://localhost:2000/edit-movie/' + id, {
+        axios.post('http://localhost:2000/edit-movie/' + id_mov, {
             nama,tahun, description
         }).then((res) => {
             console.log(res.data)
@@ -79,28 +79,28 @@ class Managemovies extends Component {
     }
 
     renderBodyMovies = () => {
-        var listJSXMovies = this.state.listMovie.map(({ id, nama, tahun, description}) => {
+        var listJSXMovies = this.state.listMovie.map(({ id_mov, nama, tahun, description}) => {
             
-            if(this.state.idTabel === id){
+            if(this.state.idTabel === id_mov){
                 return (
                     <tr>
-                        <td>{id}</td>
+                        <td>{id_mov}</td>
                         <td><input ref="namaSAVE" type="text" defaultValue={nama} className="form-control" style={{width: "80px"}} /></td>    
                         <td><input ref="tahunSAVE" type="number" defaultValue={tahun} className="form-control" style={{width: "80px"}} /></td>
                         <td><textarea ref="descSAVE" defaultValue={description} className="form-control"></textarea></td>
-                        <td><input className="btn btn-success" type="button" value="Save" onClick={() => this.onBtnSaveClick(id)}/></td>
+                        <td><input className="btn btn-success" type="button" value="Save" onClick={() => this.onBtnSaveClick(id_mov)}/></td>
                         <td><input className="btn btn-danger" type="button" value="Cancel" onClick={this.onCancel}/></td>
                     </tr>
                 )
             }else{
                 return (
                     <tr>
-                        <td>{id}</td>
+                        <td>{id_mov}</td>
                         <td>{nama}</td>
                         <td>{tahun}</td>
                         <td>{description}</td>
-                        <td><input className="btn btn-primary" type="button" value="Edit" onClick={() => this.onBtnEditText(id)}/></td>
-                        <td><input className="btn btn-danger" type="button" value="Delete" onClick={() => this.onBtnDeleteClick(id)} /></td>
+                        <td><input className="btn btn-primary" type="button" value="Edit" onClick={() => this.onBtnEditText(id_mov)}/></td>
+                        <td><input className="btn btn-danger" type="button" value="Delete" onClick={() => this.onBtnDeleteClick(id_mov)} /></td>
                     </tr>
                 )
             }
